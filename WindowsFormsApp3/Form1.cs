@@ -18,7 +18,7 @@ namespace WindowsFormsApp3
         public Form1()
         {
             InitializeComponent();
-            GetWindowServices();
+          //  GetWindowServices();
             
         }
 
@@ -78,7 +78,7 @@ namespace WindowsFormsApp3
 
         
 
-
+/*
        void GetProcesses()
         {
             proc = Process.GetProcesses();
@@ -88,8 +88,8 @@ namespace WindowsFormsApp3
                 listView1.Items.Add(p.ProcessName);
             }
         }
-       
-
+       */
+        /*
         private void GetWindowServices()
         {
             // throw new NotImplementedException();
@@ -102,36 +102,36 @@ namespace WindowsFormsApp3
             }
 
         }
-
+        */
         Process[] proc;
         
        void GetAllProcess()
         {
             proc = Process.GetProcesses();
-            listBox2.Items.Clear();
+            listView1.Items.Clear();
             foreach(Process p in proc)
             {
-                listBox2.Items.Add(p.ProcessName);
+                listView1.Items.Add(p.ProcessName);
             }
         }
         
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            GetAllProcess();
+          //  GetAllProcess();
             listView1.View = View.Details;
             listView1.Columns.Add("İşlem Adı",200);
-            listView1.Columns.Add("CPU miktarı % ",120);
+            listView1.Columns.Add("CPU Kullanımı % ",120);
             listView1.Columns.Add("Bellek Kullanımı % ",120);
             RefreshProcessList();
             listView2.View = View.Details;
-            listView2.Columns.Add("Hizmet Adı", 200);
+            listView2.Columns.Add("Ad", 200);
             listView2.Columns.Add("PID", 120);
             listView2.Columns.Add("Durum", 120);
             RefreshServiceList();
             listView3.View = View.Details;
             listView3.Columns.Add("Kullanıcı Adı", 200);
-            listView3.Columns.Add("CPU Kullanımı (%)", 120);
+            listView3.Columns.Add("CPU Kullanımı %", 120);
             listView3.Columns.Add("Bellek Kullanımı (%)", 120);
             RefreshUserList();
 
@@ -252,7 +252,7 @@ namespace WindowsFormsApp3
         {
 
         }
-
+        /*
         private void button1_Click(object sender, EventArgs e)
         {
             try
@@ -264,6 +264,17 @@ namespace WindowsFormsApp3
             {
                 MessageBox.Show(ex.Message, "Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+        */
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Process[] procs = Process.GetProcessesByName(listView1.SelectedItems.ToString());
+            foreach (Process p in procs)
+            {
+                p.Kill();
+            }
+          /*  Process process = (Process)listView1.SelectedItems;
+            process.Kill();*/
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -277,6 +288,7 @@ namespace WindowsFormsApp3
             {
                 if (rnt.ShowDialog() == DialogResult.OK)
                     GetAllProcess();
+                  
             }
         }
 
