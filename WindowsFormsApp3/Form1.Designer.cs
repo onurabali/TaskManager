@@ -29,6 +29,8 @@ namespace WindowsFormsApp3
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.menuStrip2 = new System.Windows.Forms.MenuStrip();
             this.upoıpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.yeniGörevÇalıştırToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,14 +51,22 @@ namespace WindowsFormsApp3
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.listView1 = new System.Windows.Forms.ListView();
+            this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.dosyaKonumuAçToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.listView2 = new System.Windows.Forms.ListView();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.durdurToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.çalıştırToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.listView3 = new System.Windows.Forms.ListView();
+            this.endTaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
+            this.contextMenuStrip2.SuspendLayout();
             this.tabPage5.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.tabPage6.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -85,14 +95,14 @@ namespace WindowsFormsApp3
             // yeniGörevÇalıştırToolStripMenuItem
             // 
             this.yeniGörevÇalıştırToolStripMenuItem.Name = "yeniGörevÇalıştırToolStripMenuItem";
-            this.yeniGörevÇalıştırToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.yeniGörevÇalıştırToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.yeniGörevÇalıştırToolStripMenuItem.Text = "Yeni Görev Çalıştır";
             this.yeniGörevÇalıştırToolStripMenuItem.Click += new System.EventHandler(this.yeniGörevÇalıştırToolStripMenuItem_Click);
             // 
             // çıkışToolStripMenuItem
             // 
             this.çıkışToolStripMenuItem.Name = "çıkışToolStripMenuItem";
-            this.çıkışToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.çıkışToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.çıkışToolStripMenuItem.Text = "Çıkış";
             this.çıkışToolStripMenuItem.Click += new System.EventHandler(this.çıkışToolStripMenuItem_Click);
             // 
@@ -138,8 +148,9 @@ namespace WindowsFormsApp3
             // işlemlerToolStripMenuItem
             // 
             this.işlemlerToolStripMenuItem.Name = "işlemlerToolStripMenuItem";
-            this.işlemlerToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.işlemlerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.işlemlerToolStripMenuItem.Text = "İşlemler";
+            this.işlemlerToolStripMenuItem.Click += new System.EventHandler(this.işlemlerToolStripMenuItem_Click);
             // 
             // görüntüleToolStripMenuItem
             // 
@@ -170,21 +181,21 @@ namespace WindowsFormsApp3
             // yüksekToolStripMenuItem
             // 
             this.yüksekToolStripMenuItem.Name = "yüksekToolStripMenuItem";
-            this.yüksekToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.yüksekToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.yüksekToolStripMenuItem.Text = "Yüksek";
             this.yüksekToolStripMenuItem.Click += new System.EventHandler(this.yüksekToolStripMenuItem_Click);
             // 
             // normalToolStripMenuItem
             // 
             this.normalToolStripMenuItem.Name = "normalToolStripMenuItem";
-            this.normalToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.normalToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.normalToolStripMenuItem.Text = "Normal";
             this.normalToolStripMenuItem.Click += new System.EventHandler(this.normalToolStripMenuItem_Click);
             // 
             // yavaşToolStripMenuItem
             // 
             this.yavaşToolStripMenuItem.Name = "yavaşToolStripMenuItem";
-            this.yavaşToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.yavaşToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.yavaşToolStripMenuItem.Text = "Yavaş";
             this.yavaşToolStripMenuItem.Click += new System.EventHandler(this.yavaşToolStripMenuItem_Click);
             // 
@@ -222,14 +233,33 @@ namespace WindowsFormsApp3
             // 
             // listView1
             // 
+            this.listView1.ContextMenuStrip = this.contextMenuStrip2;
+            this.listView1.GridLines = true;
             this.listView1.HideSelection = false;
             this.listView1.Location = new System.Drawing.Point(0, 0);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(1036, 454);
+            this.listView1.Sorting = System.Windows.Forms.SortOrder.Descending;
             this.listView1.TabIndex = 0;
             this.listView1.Tag = "";
             this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView1.View = System.Windows.Forms.View.Details;
             this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
+            // 
+            // contextMenuStrip2
+            // 
+            this.contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.dosyaKonumuAçToolStripMenuItem,
+            this.endTaskToolStripMenuItem});
+            this.contextMenuStrip2.Name = "contextMenuStrip2";
+            this.contextMenuStrip2.Size = new System.Drawing.Size(169, 48);
+            // 
+            // dosyaKonumuAçToolStripMenuItem
+            // 
+            this.dosyaKonumuAçToolStripMenuItem.Name = "dosyaKonumuAçToolStripMenuItem";
+            this.dosyaKonumuAçToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.dosyaKonumuAçToolStripMenuItem.Text = "dosya konumu aç";
+            this.dosyaKonumuAçToolStripMenuItem.Click += new System.EventHandler(this.dosyaKonumuAçToolStripMenuItem_Click);
             // 
             // tabPage5
             // 
@@ -244,12 +274,38 @@ namespace WindowsFormsApp3
             // 
             // listView2
             // 
+            this.listView2.ContextMenuStrip = this.contextMenuStrip1;
+            this.listView2.GridLines = true;
             this.listView2.HideSelection = false;
             this.listView2.Location = new System.Drawing.Point(-4, 0);
             this.listView2.Name = "listView2";
             this.listView2.Size = new System.Drawing.Size(1040, 454);
             this.listView2.TabIndex = 0;
             this.listView2.UseCompatibleStateImageBehavior = false;
+            this.listView2.View = System.Windows.Forms.View.Details;
+            this.listView2.SelectedIndexChanged += new System.EventHandler(this.listView2_SelectedIndexChanged);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.durdurToolStripMenuItem,
+            this.çalıştırToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(111, 48);
+            // 
+            // durdurToolStripMenuItem
+            // 
+            this.durdurToolStripMenuItem.Name = "durdurToolStripMenuItem";
+            this.durdurToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.durdurToolStripMenuItem.Text = "durdur";
+            this.durdurToolStripMenuItem.Click += new System.EventHandler(this.durdurToolStripMenuItem_Click);
+            // 
+            // çalıştırToolStripMenuItem
+            // 
+            this.çalıştırToolStripMenuItem.Name = "çalıştırToolStripMenuItem";
+            this.çalıştırToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.çalıştırToolStripMenuItem.Text = "çalıştır";
+            this.çalıştırToolStripMenuItem.Click += new System.EventHandler(this.çalıştırToolStripMenuItem_Click);
             // 
             // tabPage6
             // 
@@ -264,12 +320,21 @@ namespace WindowsFormsApp3
             // 
             // listView3
             // 
+            this.listView3.GridLines = true;
             this.listView3.HideSelection = false;
             this.listView3.Location = new System.Drawing.Point(0, 0);
             this.listView3.Name = "listView3";
             this.listView3.Size = new System.Drawing.Size(1040, 454);
             this.listView3.TabIndex = 0;
             this.listView3.UseCompatibleStateImageBehavior = false;
+            this.listView3.View = System.Windows.Forms.View.Details;
+            // 
+            // endTaskToolStripMenuItem
+            // 
+            this.endTaskToolStripMenuItem.Name = "endTaskToolStripMenuItem";
+            this.endTaskToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.endTaskToolStripMenuItem.Text = "end task";
+            this.endTaskToolStripMenuItem.Click += new System.EventHandler(this.endTaskToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -279,14 +344,18 @@ namespace WindowsFormsApp3
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.menuStrip2);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Task Manager";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip2.ResumeLayout(false);
             this.menuStrip2.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
+            this.contextMenuStrip2.ResumeLayout(false);
             this.tabPage5.ResumeLayout(false);
+            this.contextMenuStrip1.ResumeLayout(false);
             this.tabPage6.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -318,6 +387,12 @@ namespace WindowsFormsApp3
         private System.Windows.Forms.ListView listView2;
         private System.Windows.Forms.TabPage tabPage6;
         private System.Windows.Forms.ListView listView3;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem durdurToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem çalıştırToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip2;
+        private System.Windows.Forms.ToolStripMenuItem dosyaKonumuAçToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem endTaskToolStripMenuItem;
     }
 }
 

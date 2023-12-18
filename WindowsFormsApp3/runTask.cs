@@ -28,6 +28,8 @@ namespace WindowsFormsApp3
                     Process proc = new Process();
                     proc.StartInfo.FileName = txtOpen.Text;
                     proc.Start();
+                    // RefreshProcessList();
+                   // this.Refresh();
                 }
                 catch(Exception ex)
                 {
@@ -35,6 +37,29 @@ namespace WindowsFormsApp3
                        
                 }
             }
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+                txtOpen.Text = openFileDialog.FileName;
+            
+
+
+
+
+        }
+
+        private void runTask_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

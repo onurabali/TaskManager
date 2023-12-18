@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Management;
 using System.ServiceProcess;
@@ -21,8 +22,27 @@ namespace WindowsFormsApp3
           //  GetWindowServices();
             
         }
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            //  GetAllProcess();
+            //  listView1.View = View.Details;
+            listView1.Columns.Add("İşlem Adı", 300);
+            listView1.Columns.Add("CPU Kullanımı % ", 150);
+            listView1.Columns.Add("Bellek Kullanımı % ", 150);
+            RefreshProcessList();
+            //  listView2.View = View.Details;
+            listView2.Columns.Add("Ad", 300);
+            listView2.Columns.Add("PID", 150);
+            listView2.Columns.Add("Durum", 150);
+            RefreshServiceList();
+            //   listView3.View = View.Details;
+            listView3.Columns.Add("Kullanıcı Adı", 300);
+            listView3.Columns.Add("CPU Kullanımı %", 150);
+            listView3.Columns.Add("Bellek Kullanımı (%)", 150);
+            RefreshUserList();
 
-     
+        }
+
         private void RefreshProcessList()
         {
             listView1.Items.Clear();
@@ -51,16 +71,6 @@ namespace WindowsFormsApp3
             return process.TotalProcessorTime.Ticks / (float)DateTime.Now.Subtract(process.StartTime).Ticks * 100 / Environment.ProcessorCount;
         }
 
-        private float GetMemoryUsage(Process process)
-        {
-            float memoryUsage = 0;
-
-            memoryUsage = process.WorkingSet64;
-
-            long totalMemory = GetTotalMemory();
-            return memoryUsage / (float)totalMemory * 100;
-        }
-
         private long GetTotalMemory()
         {
             long totalMemory = 0;
@@ -75,34 +85,18 @@ namespace WindowsFormsApp3
 
             return totalMemory;
         }
+        private float GetMemoryUsage(Process process)
+        {
+            float memoryUsage = 0;
+
+            memoryUsage = process.WorkingSet64;
+
+            long totalMemory = GetTotalMemory();
+            return memoryUsage / (float)totalMemory * 100;
+        }
+
 
         
-
-/*
-       void GetProcesses()
-        {
-            proc = Process.GetProcesses();
-            listBox2.Items.Clear();
-            foreach (Process p in proc)
-            {
-                listView1.Items.Add(p.ProcessName);
-            }
-        }
-       */
-        /*
-        private void GetWindowServices()
-        {
-            // throw new NotImplementedException();
-            ServiceController[] service;
-            service = ServiceController.GetServices();
-            listBox1.Items.Clear();
-            for(int i=0; i<service.Length; i++)
-            {
-                listBox1.Items.Add(service[i].ServiceName);
-            }
-
-        }
-        */
         Process[] proc;
         
        void GetAllProcess()
@@ -115,27 +109,8 @@ namespace WindowsFormsApp3
             }
         }
         
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-          //  GetAllProcess();
-            listView1.View = View.Details;
-            listView1.Columns.Add("İşlem Adı",200);
-            listView1.Columns.Add("CPU Kullanımı % ",120);
-            listView1.Columns.Add("Bellek Kullanımı % ",120);
-            RefreshProcessList();
-            listView2.View = View.Details;
-            listView2.Columns.Add("Ad", 200);
-            listView2.Columns.Add("PID", 120);
-            listView2.Columns.Add("Durum", 120);
-            RefreshServiceList();
-            listView3.View = View.Details;
-            listView3.Columns.Add("Kullanıcı Adı", 200);
-            listView3.Columns.Add("CPU Kullanımı %", 120);
-            listView3.Columns.Add("Bellek Kullanımı (%)", 120);
-            RefreshUserList();
-
-        }
+        
+        
         private void RefreshUserList()
         {
             listView3.Items.Clear();
@@ -193,7 +168,7 @@ namespace WindowsFormsApp3
                     string status = service.Status.ToString();
 
                     ListViewItem item = new ListViewItem(serviceName);
-                    item.SubItems.Add(processId.ToString());
+                    item.SubItems.Add(processId.ToString()); // sutun
                     item.SubItems.Add(status);
                     listView2.Items.Add(item);
                 }
@@ -221,8 +196,8 @@ namespace WindowsFormsApp3
 
         private void çıkışToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.Close();
-            Application.Exit();
+           // this.Close(); sadece bu form için
+          Application.Exit();
         }
 
         private void herZamanÜstteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -252,43 +227,41 @@ namespace WindowsFormsApp3
         {
 
         }
-        /*
+        
+
         private void button1_Click(object sender, EventArgs e)
         {
-            try
+            /* Process[] procs = Process.GetProcessesByName(listView1.SelectedItems.ToString());
+             foreach (Process p in procs)
+             {
+                 p.Kill();
+             }*/
+            /*  Process process = (Process)listView1.SelectedItems;
+              process.Kill();*/
+            ListViewItem selectedItem = listView1.SelectedItems[0];
+            string processName = selectedItem.Text;
+            Process[] processes = Process.GetProcessesByName(processName);
+            foreach (Process process in processes)
             {
-                proc[listBox2.SelectedIndex].Kill();
-                GetAllProcess();
+                process.Kill();
+                RefreshProcessList();
             }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-        */
-        private void button1_Click(object sender, EventArgs e)
-        {
-            Process[] procs = Process.GetProcessesByName(listView1.SelectedItems.ToString());
-            foreach (Process p in procs)
-            {
-                p.Kill();
-            }
-          /*  Process process = (Process)listView1.SelectedItems;
-            process.Kill();*/
+
+
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
-
+        
         private void yeniGörevÇalıştırToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using(runTask rnt=new runTask())
             {
                 if (rnt.ShowDialog() == DialogResult.OK)
                     GetAllProcess();
-                  
+               
             }
         }
 
@@ -309,14 +282,14 @@ namespace WindowsFormsApp3
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            
         }
 
         private void yüksekToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Timer refreshTimer = new Timer();
             refreshTimer.Interval = 60000; // 60 saniye 
-            refreshTimer.Tick += RefreshTimer_Tick;
+            refreshTimer.Tick += RefreshTimer_Tick; // tick olduğunda tiick altındaki işlemleri yapar.
             refreshTimer.Start();
         }
         private void RefreshTimer_Tick(object sender, EventArgs e)
@@ -341,6 +314,126 @@ namespace WindowsFormsApp3
             refreshTimer.Interval = 15000; // 15 saniye 
             refreshTimer.Tick += RefreshTimer_Tick;
             refreshTimer.Start();
+        }
+
+        private void listView2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void durdurToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (listView2.SelectedItems.Count > 0)
+            {
+                ListViewItem selectedItem = listView2.SelectedItems[0];
+                string serviceName = selectedItem.Text;
+
+                try
+                {
+                    ServiceController service = new ServiceController(serviceName);
+
+                    if (service.Status != ServiceControllerStatus.Stopped)
+                    {
+                        service.Stop();
+                     //   service.WaitForStatus(ServiceControllerStatus.Stopped, TimeSpan.FromSeconds(10)); 
+                        RefreshServiceList(); 
+                    }
+                    else
+                    {
+                        MessageBox.Show("Hizmet zaten durdurulmuş.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Hizmet durdurulamadı: " + ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void çalıştırToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (listView2.SelectedItems.Count > 0)
+            {
+                ListViewItem selectedItem = listView2.SelectedItems[0];
+                string serviceName = selectedItem.Text;
+
+                try
+                {
+                    ServiceController service = new ServiceController(serviceName);
+
+                    if (service.Status != ServiceControllerStatus.Running)
+                    {
+                        service.Start();
+                     
+                        RefreshServiceList(); 
+                    }
+                    else
+                    {
+                        MessageBox.Show("hizmet zaten çalışıyor","uyarı");
+                     
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("hizmet başlatılamadı: ", "hata");
+                }
+            }
+        }
+
+        private void dosyaKonumuAçToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            /* {
+
+                 OpenFileDialog file = new OpenFileDialog();
+
+                 if (file.ShowDialog() == DialogResult.OK)
+                 {
+                     FileInfo fi = new FileInfo(file.FileName);
+                     if (fi.Exists)
+                     {
+                         System.Diagnostics.Process.Start(file.FileName);
+                     }
+                     else //www.yazilimkodlama.com
+                     {
+                         //Hata
+                     }
+                 }
+             }*/
+            if(listView1.SelectedItems.Count >0)
+            {
+                ListViewItem selectedItem = listView1.SelectedItems[0];
+                string processname = selectedItem.Text;
+                Process[] processes = Process.GetProcessesByName(processname);
+                if (processes.Length > 0)
+                {
+                    string filepath = processes[0].MainModule.FileName;
+
+                    if (!string.IsNullOrEmpty(filepath))
+                    {
+                        Process.Start("explorer.exe", $"/select,\"{filepath}\"");
+                    }
+                }
+                else
+                    MessageBox.Show("dosya konumu yok","hata");
+            }
+            
+        }
+
+        private void endTaskToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ListViewItem selectedItem = listView1.SelectedItems[0];
+            string processName = selectedItem.Text;
+            Process[] processes = Process.GetProcessesByName(processName);
+            foreach (Process process in processes)
+            {
+                process.Kill();
+                RefreshProcessList();
+            }
+        }
+
+        private void işlemlerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
